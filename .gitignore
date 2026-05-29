@@ -1,0 +1,52 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entorno virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Variables de entorno
+.env
+
+# Archivos de base de datos
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos estáticos y media
+media/
+staticfiles/
+
+# Logs
+*.log
+
+# Archivos de VS Code
+.vscode/
+
+# Archivos de PyCharm
+.idea/
+
+# Migraciones compiladas
+*.mo
+*.pot
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# coverage
+htmlcov/
+.coverage
+
+# Archivos temporales
+*.swp
+*.swo
