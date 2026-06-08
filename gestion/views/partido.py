@@ -18,7 +18,7 @@ from gestion.pagination import StandardPagination
 class PartidoViewSet(viewsets.ModelViewSet):
     serializer_class = PartidoSerializer
     # Se actualizan los permisos: Debe estar autenticado y ser el dueño o administrador
-    permission_classes = [IsAuthenticated, IsOwnerOrStaff]
+    permission_classes = [IsCoachOrReadOnly, IsOwnerOrStaff]
     pagination_class = StandardPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = PartidoFilter
@@ -28,12 +28,10 @@ class PartidoViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        Filtra el queryset para que el Coach común solo vea sus partidos creados,
-        mientras que el Staff administrativo pueda verlos todos.
+        Devuelve TODOS los partidos para lectura, 
+        pero la seguridad de edición se maneja en 'has_object_permission'.
         """
-        if self.request.user.is_staff:
-            return Partido.objects.select_related('usuario').prefetch_related('eventos__jugador').all()
-        return Partido.objects.filter(usuario=self.request.user).prefetch_related('eventos__jugador')
+        return Partido.objects.select_related('usuario').prefetch_related('eventos__jugador').all()
 
     def perform_create(self, serializer):
         """Asigna automáticamente el usuario logueado como el coach del partido"""

@@ -33,6 +33,11 @@ class IsOwnerOrStaff(BasePermission):
     pueda añadir o modificar las métricas/datos de ese objeto específico.
     """
     def has_object_permission(self, request, view, obj):
+        # 1. Si el método es de lectura (GET, HEAD, OPTIONS), permitir acceso
+        if request.method in SAFE_METHODS:
+            return True
+            
+        # 2. Para escritura (POST, PUT, PATCH, DELETE), validar dueño o staff
         if not request.user or not request.user.is_authenticated:
             return False
             
